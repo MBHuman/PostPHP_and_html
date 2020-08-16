@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+    <form> 
+        First name: <input type="text" onkeyup="showHint(this.value)">
+    </form>
+    <p>Suggestions: <span id="txtHint"></span></p>
+
+    <script>
+        function showHint(str) {
+          if (str.length == 0) { 
+                //make the txtHint value as Blank
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+            } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+              //status 200 mean it is OK
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            };
+            //bass the value of textbox to php
+            xmlhttp.open("GET", "gethint.php?q=" + str, true);
+            xmlhttp.send();
+            }
+        }
+    </script>
+</body>
+
+</html>
